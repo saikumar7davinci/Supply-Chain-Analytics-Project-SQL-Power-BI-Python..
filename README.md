@@ -3,11 +3,11 @@
 > Transforming Supply Chain Operations into Actionable Business Intelligence using **Power BI, SQL, Python, and Excel**
 
 <p align="center">
-  <img src="Images/dashboard-preview.png" alt="Supply Chain Dashboard" width="100%">
+  <img src="https://raw.githubusercontent.com/saikumar7davinci/Supply-Chain-Analytics-Project-SQL-Power-BI-Python../adc20cda2eacf0af8713638dc5f4939389fa6d96/Supply%20chain%20report.png" alt="Supply Chain Dashboard" width="100%">
 </p>
 
 ---
-
+https://github.com/saikumar7davinci/Supply-Chain-Analytics-Project-SQL-Power-BI-Python../blob/adc20cda2eacf0af8713638dc5f4939389fa6d96/Supply%20chain%20report.png
 # 📌 Project Overview
 
 The **Supply Chain Analytics Dashboard** is an end-to-end Business Intelligence solution designed to provide real-time visibility into supply chain operations, inventory health, logistics performance, supplier efficiency, and revenue optimization.
