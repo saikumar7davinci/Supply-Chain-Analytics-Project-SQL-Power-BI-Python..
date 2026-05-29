@@ -1,9 +1,10 @@
-
 # 🚚 Supply Chain Analytics Command Center
 
 > Transforming Supply Chain Operations into Actionable Business Intelligence using **Power BI, SQL, Python, and Excel**
 
-![Dashboard Preview](Images/dashboard-preview.png)
+<p align="center">
+  <img src="Images/dashboard-preview.png" alt="Supply Chain Dashboard" width="100%">
+</p>
 
 ---
 
@@ -17,11 +18,31 @@ Built with an industry-focused approach, this dashboard simulates enterprise-lev
 
 ---
 
+# ✨ Dashboard Snapshot
+
+## 📊 Executive KPI Overview
+- 💰 Total Revenue Tracking
+- 📦 Units Sold Monitoring
+- 🏭 Inventory Stock Visibility
+- ⏱️ Lead Time Analysis
+- 🚚 Shipment Performance Tracking
+- ⚠️ Defect Rate Monitoring
+
+## 📈 Advanced Analytics Included
+- Revenue Trend Analysis
+- Operational Cost Analysis
+- Transportation Cost Monitoring
+- Supplier Contribution Analysis
+- Product Category Distribution
+- Inventory Level Insights
+
+---
+
 # 🎯 Business Objectives
 
 ✅ Improve operational visibility across supply chain activities  
 ✅ Monitor inventory performance and stock movement  
-✅ Analyze revenue, operational costs, and profitability  
+✅ Analyze revenue vs operational costs  
 ✅ Evaluate supplier contribution and procurement efficiency  
 ✅ Optimize logistics and transportation costs  
 ✅ Identify defect trends and quality issues  
@@ -41,7 +62,7 @@ Built with an industry-focused approach, this dashboard simulates enterprise-lev
 
 ---
 
-# 📊 Dashboard Highlights
+# 📊 Dashboard Features
 
 ## 💰 Executive KPI Monitoring
 
@@ -239,9 +260,9 @@ Supply-Chain-Analytics-Project/
 
 ---
 
-# ⭐ If You Like This Project
+# ⭐ Support
 
-Give this repository a ⭐ and connect with me for more Data Analytics & Business Intelligence projects.
+If you found this project valuable, consider giving this repository a ⭐ on GitHub.
 
 ---
 
