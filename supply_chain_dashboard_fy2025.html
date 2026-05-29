@@ -1,0 +1,547 @@
+
+<h2 class="sr-only">Supply Chain Analytics Dashboard FY2025 — Beauty & Personal Care, India Operations, 100 SKUs</h2>
+
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: var(--font-sans); }
+.dash { padding: 12px; background: var(--color-background-tertiary); min-height: 100vh; }
+.dash-header { display: flex; align-items: center; justify-content: space-between; padding: 10px 16px; background: #1a2340; border-radius: var(--border-radius-md); margin-bottom: 12px; }
+.dash-title { color: #fff; font-size: 15px; font-weight: 500; letter-spacing: 0.2px; }
+.dash-sub { color: #8ba3cc; font-size: 11px; margin-top: 2px; }
+.kpi-row { display: grid; grid-template-columns: repeat(6, 1fr); gap: 8px; margin-bottom: 12px; }
+.kpi { background: var(--color-background-primary); border: 0.5px solid var(--color-border-tertiary); border-radius: var(--border-radius-md); padding: 10px 12px; border-top: 3px solid var(--accent-color, #378add); }
+.kpi-label { font-size: 10px; color: var(--color-text-secondary); text-transform: uppercase; letter-spacing: 0.5px; }
+.kpi-val { font-size: 20px; font-weight: 500; color: var(--color-text-primary); margin-top: 2px; }
+.kpi-sub { font-size: 10px; color: var(--color-text-secondary); margin-top: 1px; }
+.row2 { display: grid; grid-template-columns: 2fr 1.4fr 1.4fr; gap: 8px; margin-bottom: 12px; }
+.row3 { display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 8px; margin-bottom: 12px; }
+.row4 { display: grid; grid-template-columns: 1.6fr 1fr 1.4fr; gap: 8px; margin-bottom: 12px; }
+.row5 { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 12px; }
+.row6 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; margin-bottom: 8px; }
+.card { background: var(--color-background-primary); border: 0.5px solid var(--color-border-tertiary); border-radius: var(--border-radius-md); padding: 12px; }
+.card-title { font-size: 11px; font-weight: 500; color: var(--color-text-secondary); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 10px; }
+.chart-wrap { position: relative; }
+.legend { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 8px; font-size: 10px; color: var(--color-text-secondary); }
+.legend span { display: flex; align-items: center; gap: 3px; }
+.legend-dot { width: 8px; height: 8px; border-radius: 2px; flex-shrink: 0; }
+.gauge-wrap { display: flex; justify-content: space-around; align-items: center; padding: 4px 0; }
+.gauge-item { text-align: center; }
+.gauge-val { font-size: 22px; font-weight: 500; }
+.gauge-lbl { font-size: 10px; color: var(--color-text-secondary); margin-top: 2px; }
+.progress-item { display: flex; align-items: center; gap: 8px; margin-bottom: 6px; font-size: 11px; }
+.prog-label { min-width: 80px; color: var(--color-text-secondary); }
+.prog-bar-wrap { flex: 1; height: 7px; background: var(--color-background-secondary); border-radius: 4px; overflow: hidden; }
+.prog-bar { height: 100%; border-radius: 4px; }
+.prog-val { min-width: 36px; text-align: right; font-weight: 500; color: var(--color-text-primary); font-size: 11px; }
+.heatmap-cell { font-size: 10px; font-weight: 500; border-radius: 2px; display: flex; align-items: center; justify-content: center; height: 28px; }
+.sku-table { width: 100%; font-size: 10px; border-collapse: collapse; }
+.sku-table th { color: var(--color-text-secondary); font-weight: 500; padding: 4px 6px; border-bottom: 0.5px solid var(--color-border-tertiary); text-align: left; white-space: nowrap; }
+.sku-table td { padding: 4px 6px; border-bottom: 0.5px solid var(--color-border-tertiary); color: var(--color-text-primary); }
+.badge { display: inline-block; padding: 1px 6px; border-radius: 3px; font-size: 9px; font-weight: 500; }
+.badge-pass { background: #eaf3de; color: #3B6D11; }
+.badge-fail { background: #fcebeb; color: #A32D2D; }
+.badge-pend { background: #faeeda; color: #854F0B; }
+.map-svg text { font-family: var(--font-sans); }
+.filter-row { display: flex; gap: 8px; margin-bottom: 12px; flex-wrap: wrap; }
+.filter-chip { padding: 4px 10px; border-radius: 20px; font-size: 10px; border: 0.5px solid var(--color-border-secondary); background: var(--color-background-primary); color: var(--color-text-secondary); cursor: pointer; white-space: nowrap; }
+.filter-chip.active { background: #1a2340; color: #fff; border-color: #1a2340; }
+</style>
+
+<div class="dash">
+
+<div class="dash-header">
+  <div>
+    <div class="dash-title"><i class="ti ti-truck" aria-hidden="true" style="margin-right:6px;"></i>Supply Chain Analytics Dashboard</div>
+    <div class="dash-sub">Beauty &amp; Personal Care · India Operations · 100 SKUs · FY 2025</div>
+  </div>
+  <div style="display:flex;gap:8px;align-items:center;">
+    <span style="font-size:10px;color:#8ba3cc;background:rgba(255,255,255,0.08);padding:4px 10px;border-radius:20px;">All Categories</span>
+    <span style="font-size:10px;color:#8ba3cc;background:rgba(255,255,255,0.08);padding:4px 10px;border-radius:20px;">All Suppliers</span>
+    <span style="font-size:10px;color:#8ba3cc;background:rgba(255,255,255,0.08);padding:4px 10px;border-radius:20px;">FY 2025</span>
+    <span style="font-size:10px;color:#8ba3cc;background:rgba(255,255,255,0.08);padding:4px 10px;border-radius:20px;">All Routes</span>
+  </div>
+</div>
+
+<div class="kpi-row">
+  <div class="kpi" style="--accent-color:#378add;">
+    <div class="kpi-label"><i class="ti ti-currency-rupee" aria-hidden="true"></i> Total Revenue</div>
+    <div class="kpi-val">₹23.2L</div>
+    <div class="kpi-sub">100 Active SKUs</div>
+  </div>
+  <div class="kpi" style="--accent-color:#1D9E75;">
+    <div class="kpi-label"><i class="ti ti-shopping-cart" aria-hidden="true"></i> Units Sold</div>
+    <div class="kpi-val">46,371</div>
+    <div class="kpi-sub">Avg 463 / SKU</div>
+  </div>
+  <div class="kpi" style="--accent-color:#BA7517;">
+    <div class="kpi-label"><i class="ti ti-package" aria-hidden="true"></i> Total Stock</div>
+    <div class="kpi-val">4,793</div>
+    <div class="kpi-sub">Units in inventory</div>
+  </div>
+  <div class="kpi" style="--accent-color:#534AB7;">
+    <div class="kpi-label"><i class="ti ti-clock" aria-hidden="true"></i> Avg Lead Time</div>
+    <div class="kpi-val">15.9d</div>
+    <div class="kpi-sub">Procurement days</div>
+  </div>
+  <div class="kpi" style="--accent-color:#D85A30;">
+    <div class="kpi-label"><i class="ti ti-truck-delivery" aria-hidden="true"></i> Avg Ship Time</div>
+    <div class="kpi-val">5.7d</div>
+    <div class="kpi-sub">Carrier average</div>
+  </div>
+  <div class="kpi" style="--accent-color:#E24B4A;">
+    <div class="kpi-label"><i class="ti ti-alert-triangle" aria-hidden="true"></i> Avg Defect %</div>
+    <div class="kpi-val">2.26%</div>
+    <div class="kpi-sub">QC defect rate</div>
+  </div>
+</div>
+
+<div class="row2">
+  <div class="card">
+    <div class="card-title">Monthly Revenue Trend Analysis</div>
+    <div class="legend">
+      <span><span class="legend-dot" style="background:#378add;"></span>Skincare</span>
+      <span><span class="legend-dot" style="background:#1D9E75;"></span>Haircare</span>
+      <span><span class="legend-dot" style="background:#BA7517;"></span>Cosmetics</span>
+    </div>
+    <div class="chart-wrap" style="height:180px;"><canvas id="lineChart" role="img" aria-label="Monthly revenue trend for skincare, haircare, and cosmetics across 12 months">Monthly revenue line chart</canvas></div>
+  </div>
+  <div class="card">
+    <div class="card-title">Revenue vs Operational Cost</div>
+    <div class="legend">
+      <span><span class="legend-dot" style="background:#378add;"></span>Revenue</span>
+      <span><span class="legend-dot" style="background:#E24B4A;"></span>Op. Cost</span>
+    </div>
+    <div class="chart-wrap" style="height:180px;"><canvas id="clusterBar" role="img" aria-label="Clustered bar chart comparing revenue versus operational cost by product category">Revenue vs cost comparison</canvas></div>
+  </div>
+  <div class="card">
+    <div class="card-title">Waterfall — Cost Breakdown</div>
+    <div class="chart-wrap" style="height:180px;"><canvas id="waterfallChart" role="img" aria-label="Waterfall chart showing supply chain cost breakdown from revenue to profit">Cost breakdown waterfall</canvas></div>
+  </div>
+</div>
+
+<div class="row3">
+  <div class="card">
+    <div class="card-title">Product Category Distribution</div>
+    <div class="legend">
+      <span><span class="legend-dot" style="background:#378add;"></span>Skincare 47%</span>
+      <span><span class="legend-dot" style="background:#1D9E75;"></span>Haircare 27%</span>
+      <span><span class="legend-dot" style="background:#BA7517;"></span>Cosmetics 26%</span>
+    </div>
+    <div class="chart-wrap" style="height:140px;"><canvas id="donutCat" role="img" aria-label="Donut chart showing product category distribution: skincare 47%, haircare 27%, cosmetics 26%">Category distribution donut chart</canvas></div>
+  </div>
+  <div class="card">
+    <div class="card-title">Supplier Revenue Contribution</div>
+    <div class="legend">
+      <span><span class="legend-dot" style="background:#534AB7;"></span>S1 30%</span>
+      <span><span class="legend-dot" style="background:#378add;"></span>S2 23%</span>
+      <span><span class="legend-dot" style="background:#1D9E75;"></span>S3 19%</span>
+      <span><span class="legend-dot" style="background:#BA7517;"></span>S4 14%</span>
+      <span><span class="legend-dot" style="background:#D85A30;"></span>S5 14%</span>
+    </div>
+    <div class="chart-wrap" style="height:140px;"><canvas id="donutSup" role="img" aria-label="Donut chart showing supplier revenue contribution percentages">Supplier contribution donut</canvas></div>
+  </div>
+  <div class="card">
+    <div class="card-title">Transportation Cost by Mode</div>
+    <div class="chart-wrap" style="height:160px;"><canvas id="transBar" role="img" aria-label="Bar chart of transportation costs by mode: road, rail, air, sea">Transportation costs bar chart</canvas></div>
+  </div>
+  <div class="card">
+    <div class="card-title">Inventory Levels by Category</div>
+    <div class="legend">
+      <span><span class="legend-dot" style="background:#378add;"></span>Haircare</span>
+      <span><span class="legend-dot" style="background:#1D9E75;"></span>Skincare</span>
+      <span><span class="legend-dot" style="background:#BA7517;"></span>Cosmetics</span>
+    </div>
+    <div class="chart-wrap" style="height:140px;"><canvas id="stackedBar" role="img" aria-label="Stacked bar showing inventory stock levels split by product category">Inventory stacked bar chart</canvas></div>
+  </div>
+</div>
+
+<div class="row4">
+  <div class="card">
+    <div class="card-title">Treemap — Revenue by Product Type &amp; Top SKUs</div>
+    <canvas id="treemapCanvas" role="img" aria-label="Treemap visualization showing revenue contribution by product type and SKU" style="width:100%;height:160px;display:block;"></canvas>
+  </div>
+  <div class="card">
+    <div class="card-title">Gauge — Inventory Health &amp; Service Level</div>
+    <div class="gauge-wrap" style="flex-direction:column;gap:10px;">
+      <canvas id="gaugeInv" role="img" aria-label="Gauge chart showing inventory health score" style="height:100px;max-width:200px;"></canvas>
+      <div style="display:flex;justify-content:space-around;width:100%;">
+        <div class="gauge-item"><div class="gauge-val" style="color:#1D9E75;">72%</div><div class="gauge-lbl">Inventory Health</div></div>
+        <div class="gauge-item"><div class="gauge-val" style="color:#378add;">85%</div><div class="gauge-lbl">Service Level</div></div>
+      </div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-title">Lead Time vs Revenue — Scatter</div>
+    <div class="legend">
+      <span><span class="legend-dot" style="background:#378add;"></span>Skincare</span>
+      <span><span class="legend-dot" style="background:#1D9E75;"></span>Haircare</span>
+      <span><span class="legend-dot" style="background:#BA7517;"></span>Cosmetics</span>
+    </div>
+    <div class="chart-wrap" style="height:155px;"><canvas id="scatterChart" role="img" aria-label="Scatter plot comparing lead time in days versus revenue generated, colored by product category">Lead time vs revenue scatter plot</canvas></div>
+  </div>
+</div>
+
+<div class="row5">
+  <div class="card">
+    <div class="card-title">Defect Rate Heatmap — Supplier × Product Category (%)</div>
+    <div id="heatmapDiv"></div>
+  </div>
+  <div class="card">
+    <div class="card-title">Supplier Performance — Revenue &amp; Defect</div>
+    <div class="chart-wrap" style="height:180px;"><canvas id="supPerfBar" role="img" aria-label="Bar chart comparing supplier revenue and average defect rates">Supplier performance bar chart</canvas></div>
+  </div>
+</div>
+
+<div class="row6">
+  <div class="card">
+    <div class="card-title">Supplier Fulfillment &amp; Delivery — Progress</div>
+    <div id="progressDiv"></div>
+  </div>
+  <div class="card">
+    <div class="card-title">Top 10 SKUs by Revenue</div>
+    <div class="chart-wrap" style="height:180px;"><canvas id="topSkuBar" role="img" aria-label="Horizontal bar chart of top 10 SKUs by revenue generated">Top SKUs bar chart</canvas></div>
+  </div>
+  <div class="card">
+    <div class="card-title">SKU Performance Tracking</div>
+    <div style="overflow-x:auto;">
+      <table class="sku-table" id="skuTable">
+        <thead><tr>
+          <th>SKU</th><th>Type</th><th>Revenue (₹)</th><th>Units</th><th>Lead (d)</th><th>Defect%</th><th>QC</th>
+        </tr></thead>
+        <tbody id="skuTbody"></tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<div class="row5">
+  <div class="card">
+    <div class="card-title">Shipment Distribution by Region — India</div>
+    <div style="position:relative; height:200px;" id="mapWrap"></div>
+  </div>
+  <div class="card">
+    <div class="card-title">Inspection Results &amp; Quality Control</div>
+    <div class="legend">
+      <span><span class="legend-dot" style="background:#639922;"></span>Pass 30%</span>
+      <span><span class="legend-dot" style="background:#E24B4A;"></span>Fail 40%</span>
+      <span><span class="legend-dot" style="background:#BA7517;"></span>Pending 30%</span>
+    </div>
+    <div class="chart-wrap" style="height:155px;"><canvas id="qcChart" role="img" aria-label="Pie chart of inspection results: 30% pass, 40% fail, 30% pending">QC inspection pie chart</canvas></div>
+  </div>
+</div>
+
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<script>
+const MONTHS = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+const BLUE = '#378add', GREEN = '#1D9E75', AMBER = '#BA7517', PURPLE = '#534AB7', CORAL = '#D85A30', RED = '#E24B4A';
+const DARK = '#1a2340';
+
+const baseLineOpts = {
+  responsive: true, maintainAspectRatio: false,
+  plugins: { legend: { display: false }, tooltip: { mode: 'index', intersect: false } },
+  scales: {
+    x: { grid: { color: 'rgba(0,0,0,0.04)' }, ticks: { font: { size: 10 } } },
+    y: { grid: { color: 'rgba(0,0,0,0.04)' }, ticks: { font: { size: 10 }, callback: v => '₹' + (v/1000).toFixed(0) + 'K' } }
+  }
+};
+
+const skinRevArr = [72000,85000,98000,112000,88000,102000,95000,110000,88000,115000,95000,130340];
+const hairRevArr = [45000,52000,58000,62000,55000,67000,61000,72000,55000,68000,60000,65252];
+const cosRevArr =  [40000,48000,52000,58000,50000,61000,55000,68000,52000,64000,58000,52482];
+
+new Chart(document.getElementById('lineChart'), {
+  type: 'line',
+  data: {
+    labels: MONTHS,
+    datasets: [
+      { label: 'Skincare', data: skinRevArr, borderColor: BLUE, backgroundColor: BLUE+'22', tension: 0.4, fill: true, pointRadius: 2, borderWidth: 2 },
+      { label: 'Haircare', data: hairRevArr, borderColor: GREEN, backgroundColor: GREEN+'22', tension: 0.4, fill: true, pointRadius: 2, borderWidth: 2 },
+      { label: 'Cosmetics', data: cosRevArr, borderColor: AMBER, backgroundColor: AMBER+'22', tension: 0.4, fill: true, pointRadius: 2, borderWidth: 2 },
+    ]
+  },
+  options: baseLineOpts
+});
+
+new Chart(document.getElementById('clusterBar'), {
+  type: 'bar',
+  data: {
+    labels: ['Skincare','Haircare','Cosmetics'],
+    datasets: [
+      { label: 'Revenue', data: [1090340, 620252, 609482], backgroundColor: BLUE, borderRadius: 3 },
+      { label: 'Op.Cost', data: [520000, 310000, 295000], backgroundColor: RED, borderRadius: 3 }
+    ]
+  },
+  options: {
+    responsive: true, maintainAspectRatio: false,
+    plugins: { legend: { display: false } },
+    scales: {
+      x: { ticks: { font: { size: 10 } }, grid: { display: false } },
+      y: { ticks: { font: { size: 10 }, callback: v => '₹' + (v/1000).toFixed(0) + 'K' }, grid: { color: 'rgba(0,0,0,0.05)' } }
+    }
+  }
+});
+
+const wfLabels = ['Revenue','Mfg Cost','Ship Cost','Trans Cost','Defect Loss','Gross Profit'];
+const wfVals = [2320074, -477351, -55868, -53191, -52412, 1681252];
+const wfColors = wfVals.map(v => v > 0 ? BLUE : RED);
+wfColors[wfColors.length-1] = GREEN;
+new Chart(document.getElementById('waterfallChart'), {
+  type: 'bar',
+  data: {
+    labels: wfLabels,
+    datasets: [{ label: 'Amount', data: wfVals.map(Math.abs), backgroundColor: wfColors, borderRadius: 3 }]
+  },
+  options: {
+    responsive: true, maintainAspectRatio: false,
+    plugins: { legend: { display: false }, tooltip: { callbacks: { label: ctx => '₹' + ctx.raw.toLocaleString() } } },
+    scales: {
+      x: { ticks: { font: { size: 9 } }, grid: { display: false } },
+      y: { ticks: { font: { size: 9 }, callback: v => '₹' + (v/1000).toFixed(0) + 'K' }, grid: { color: 'rgba(0,0,0,0.05)' } }
+    }
+  }
+});
+
+new Chart(document.getElementById('donutCat'), {
+  type: 'doughnut',
+  data: { labels: ['Skincare','Haircare','Cosmetics'], datasets: [{ data: [1090340,620252,609482], backgroundColor: [BLUE, GREEN, AMBER], borderWidth: 2, hoverOffset: 4 }] },
+  options: { responsive: true, maintainAspectRatio: false, cutout: '65%', plugins: { legend: { display: false } } }
+});
+
+new Chart(document.getElementById('donutSup'), {
+  type: 'doughnut',
+  data: { labels: ['Supplier 1','Supplier 2','Supplier 3','Supplier 4','Supplier 5'], datasets: [{ data: [702604,524165,430380,326475,336449], backgroundColor: [PURPLE, BLUE, GREEN, AMBER, CORAL], borderWidth: 2, hoverOffset: 4 }] },
+  options: { responsive: true, maintainAspectRatio: false, cutout: '65%', plugins: { legend: { display: false } } }
+});
+
+new Chart(document.getElementById('transBar'), {
+  type: 'bar',
+  data: {
+    labels: ['Road','Rail','Air','Sea'],
+    datasets: [{ label: 'Cost', data: [16130,15111,14662,7287], backgroundColor: [BLUE, GREEN, AMBER, PURPLE], borderRadius: 3 }]
+  },
+  options: {
+    responsive: true, maintainAspectRatio: false,
+    plugins: { legend: { display: false } },
+    scales: { x: { ticks: { font: { size: 10 } }, grid: { display: false } }, y: { ticks: { font: { size: 10 }, callback: v => '₹'+v.toLocaleString() }, grid: { color: 'rgba(0,0,0,0.05)' } } }
+  }
+});
+
+new Chart(document.getElementById('stackedBar'), {
+  type: 'bar',
+  data: {
+    labels: ['Inventory'],
+    datasets: [
+      { label: 'Haircare', data: [1638], backgroundColor: BLUE, borderRadius: 3 },
+      { label: 'Skincare', data: [1604], backgroundColor: GREEN, borderRadius: 3 },
+      { label: 'Cosmetics', data: [1551], backgroundColor: AMBER, borderRadius: 3 }
+    ]
+  },
+  options: {
+    indexAxis: 'y', responsive: true, maintainAspectRatio: false,
+    plugins: { legend: { display: false } },
+    scales: { x: { stacked: true, ticks: { font: { size: 10 } } }, y: { stacked: true, ticks: { font: { size: 10 } } } }
+  }
+});
+
+const scatterData = [
+  {x:7,y:55284,type:'haircare'},{x:29,y:12769,type:'skincare'},{x:11,y:96,type:'haircare'},{x:14,y:4729,type:'skincare'},
+  {x:3,y:4563,type:'skincare'},{x:25,y:251,type:'haircare'},{x:14,y:305,type:'skincare'},{x:17,y:17720,type:'cosmetics'},
+  {x:9,y:10261,type:'cosmetics'},{x:26,y:69178,type:'skincare'},{x:13,y:14254,type:'skincare'},{x:24,y:86356,type:'skincare'},
+  {x:28,y:21051,type:'haircare'},{x:8,y:4163,type:'skincare'},{x:30,y:53312,type:'skincare'},{x:8,y:18131,type:'skincare'},
+  {x:5,y:2104,type:'skincare'},{x:17,y:12071,type:'cosmetics'},{x:9,y:19755,type:'haircare'},{x:11,y:9666,type:'skincare'},
+  {x:14,y:93252,type:'skincare'},{x:19,y:88222,type:'skincare'},{x:24,y:86356,type:'skincare'},{x:11,y:83462,type:'skincare'},
+  {x:14,y:76384,type:'skincare'},{x:12,y:65539,type:'haircare'},{x:13,y:65088,type:'skincare'},{x:5,y:62391,type:'skincare'},
+  {x:19,y:57538,type:'cosmetics'},{x:25,y:50000,type:'cosmetics'}
+];
+new Chart(document.getElementById('scatterChart'), {
+  type: 'scatter',
+  data: {
+    datasets: [
+      { label: 'Skincare', data: scatterData.filter(d=>d.type==='skincare').map(d=>({x:d.x,y:d.y})), backgroundColor: BLUE+'99', pointRadius: 5 },
+      { label: 'Haircare', data: scatterData.filter(d=>d.type==='haircare').map(d=>({x:d.x,y:d.y})), backgroundColor: GREEN+'99', pointRadius: 5, pointStyle: 'triangle' },
+      { label: 'Cosmetics', data: scatterData.filter(d=>d.type==='cosmetics').map(d=>({x:d.x,y:d.y})), backgroundColor: AMBER+'99', pointRadius: 5, pointStyle: 'rect' }
+    ]
+  },
+  options: {
+    responsive: true, maintainAspectRatio: false,
+    plugins: { legend: { display: false } },
+    scales: {
+      x: { title: { display: true, text: 'Lead Time (days)', font: { size: 10 } }, ticks: { font: { size: 9 } }, min: 0, max: 35 },
+      y: { title: { display: true, text: 'Revenue (₹)', font: { size: 10 } }, ticks: { font: { size: 9 }, callback: v => '₹'+(v/1000).toFixed(0)+'K' } }
+    }
+  }
+});
+
+new Chart(document.getElementById('supPerfBar'), {
+  type: 'bar',
+  data: {
+    labels: ['Sup 1','Sup 2','Sup 3','Sup 4','Sup 5'],
+    datasets: [
+      { label: 'Revenue (₹K)', data: [702,524,430,326,336], backgroundColor: [BLUE,GREEN,AMBER,PURPLE,CORAL], borderRadius: 3, yAxisID: 'y' },
+      { label: 'Defect %', data: [1.84,2.32,2.44,2.31,2.63], backgroundColor: RED+'88', borderRadius: 3, yAxisID: 'y2', type: 'line', borderColor: RED, pointRadius: 4 }
+    ]
+  },
+  options: {
+    responsive: true, maintainAspectRatio: false,
+    plugins: { legend: { display: false } },
+    scales: {
+      x: { ticks: { font: { size: 10 } }, grid: { display: false } },
+      y: { ticks: { font: { size: 9 }, callback: v => '₹'+v+'K' }, grid: { color: 'rgba(0,0,0,0.05)' } },
+      y2: { position: 'right', ticks: { font: { size: 9 }, callback: v => v+'%' }, grid: { display: false } }
+    }
+  }
+});
+
+new Chart(document.getElementById('topSkuBar'), {
+  type: 'bar',
+  data: {
+    labels: ['SKU80','SKU40','SKU11','SKU52','SKU47','SKU9','SKU55','SKU32','SKU58','SKU88'],
+    datasets: [{ label: 'Revenue', data: [93252,88222,86356,83462,76384,69178,65539,65088,62391,57538], backgroundColor: BLUE, borderRadius: 3 }]
+  },
+  options: {
+    indexAxis: 'y', responsive: true, maintainAspectRatio: false,
+    plugins: { legend: { display: false } },
+    scales: {
+      x: { ticks: { font: { size: 9 }, callback: v => '₹'+(v/1000).toFixed(0)+'K' }, grid: { color: 'rgba(0,0,0,0.05)' } },
+      y: { ticks: { font: { size: 9 } }, grid: { display: false } }
+    }
+  }
+});
+
+new Chart(document.getElementById('qcChart'), {
+  type: 'doughnut',
+  data: { labels: ['Pass','Fail','Pending'], datasets: [{ data: [30,40,30], backgroundColor: [GREEN, RED, AMBER], borderWidth: 2 }] },
+  options: { responsive: true, maintainAspectRatio: false, cutout: '60%', plugins: { legend: { display: false } } }
+});
+
+const heatData = {
+  suppliers: ['Supplier 1','Supplier 2','Supplier 3','Supplier 4','Supplier 5'],
+  cats: ['Cosmetics','Haircare','Skincare'],
+  vals: [
+    [1.538, 2.532, 1.745],
+    [1.978, 2.397, 2.643],
+    [3.708, 2.038, 2.527],
+    [2.045, 2.566, 1.912],
+    [1.856, 2.834, 3.279]
+  ]
+};
+const heatDiv = document.getElementById('heatmapDiv');
+const maxV = 4, minV = 0;
+let hHTML = '<div style="display:grid;grid-template-columns:90px repeat(3,1fr);gap:3px;font-size:10px;">';
+hHTML += '<div></div>';
+heatData.cats.forEach(c => { hHTML += `<div style="text-align:center;color:var(--color-text-secondary);padding:2px;font-weight:500;">${c}</div>`; });
+heatData.suppliers.forEach((s,si) => {
+  hHTML += `<div style="color:var(--color-text-secondary);display:flex;align-items:center;font-size:9px;">${s}</div>`;
+  heatData.cats.forEach((c,ci) => {
+    const v = heatData.vals[si][ci];
+    const t = (v - minV) / (maxV - minV);
+    const r = Math.round(226 + (30-226)*t), g = Math.round(75 + (75-75)*t), bh = Math.round(74+(74-74)*t);
+    const intense = t < 0.3 ? '#eaf3de' : t < 0.5 ? '#faeeda' : t < 0.7 ? '#F5C4B3' : '#fcebeb';
+    const tc = t < 0.3 ? '#3B6D11' : t < 0.5 ? '#854F0B' : t < 0.7 ? '#993C1D' : '#A32D2D';
+    hHTML += `<div class="heatmap-cell" style="background:${intense};color:${tc};">${v.toFixed(2)}%</div>`;
+  });
+});
+hHTML += '</div>';
+heatDiv.innerHTML = hHTML;
+
+const progDiv = document.getElementById('progressDiv');
+const progData = [
+  {name:'Supplier 1', fulfil:92, delivery:88},
+  {name:'Supplier 2', fulfil:85, delivery:82},
+  {name:'Supplier 3', fulfil:78, delivery:75},
+  {name:'Supplier 4', fulfil:72, delivery:70},
+  {name:'Supplier 5', fulfil:68, delivery:65},
+];
+let pHTML = '';
+progData.forEach(p => {
+  pHTML += `<div style="margin-bottom:10px;">
+    <div style="font-size:10px;font-weight:500;color:var(--color-text-primary);margin-bottom:3px;">${p.name}</div>
+    <div class="progress-item">
+      <span class="prog-label">Fulfillment</span>
+      <div class="prog-bar-wrap"><div class="prog-bar" style="width:${p.fulfil}%;background:${BLUE};"></div></div>
+      <span class="prog-val">${p.fulfil}%</span>
+    </div>
+    <div class="progress-item">
+      <span class="prog-label">Delivery</span>
+      <div class="prog-bar-wrap"><div class="prog-bar" style="width:${p.delivery}%;background:${GREEN};"></div></div>
+      <span class="prog-val">${p.delivery}%</span>
+    </div>
+  </div>`;
+});
+progDiv.innerHTML = pHTML;
+
+const skuData = [
+  {sku:'SKU80',type:'skincare',rev:93252,units:941,lead:14,defect:3.10,qc:'Pass'},
+  {sku:'SKU40',type:'skincare',rev:88222,units:871,lead:19,defect:4.69,qc:'Fail'},
+  {sku:'SKU11',type:'skincare',rev:86356,units:810,lead:24,defect:0.02,qc:'Pass'},
+  {sku:'SKU52',type:'skincare',rev:83462,units:798,lead:11,defect:2.21,qc:'Pending'},
+  {sku:'SKU47',type:'skincare',rev:76384,units:756,lead:14,defect:0.35,qc:'Pass'},
+  {sku:'SKU9', type:'skincare',rev:69178,units:681,lead:26,defect:4.18,qc:'Fail'},
+  {sku:'SKU55',type:'haircare',rev:65539,units:654,lead:12,defect:4.06,qc:'Fail'},
+  {sku:'SKU32',type:'skincare',rev:65088,units:642,lead:13,defect:1.83,qc:'Pass'},
+  {sku:'SKU58',type:'skincare',rev:62391,units:621,lead:5,defect:1.54,qc:'Pending'},
+  {sku:'SKU88',type:'cosmetics',rev:57538,units:582,lead:19,defect:0.79,qc:'Pass'},
+];
+const tbody = document.getElementById('skuTbody');
+tbody.innerHTML = skuData.map(s => `<tr>
+  <td style="font-weight:500;">${s.sku}</td>
+  <td style="color:var(--color-text-secondary);">${s.type}</td>
+  <td>₹${s.rev.toLocaleString()}</td>
+  <td>${s.units}</td>
+  <td>${s.lead}</td>
+  <td style="color:${s.defect>3?RED:s.defect>2?AMBER:GREEN};">${s.defect.toFixed(2)}%</td>
+  <td><span class="badge ${s.qc==='Pass'?'badge-pass':s.qc==='Fail'?'badge-fail':'badge-pend'}">${s.qc}</span></td>
+</tr>`).join('');
+
+const canvas = document.getElementById('treemapCanvas');
+const ctx = canvas.getContext('2d');
+canvas.width = canvas.offsetWidth || 500;
+canvas.height = 160;
+const treemapItems = [
+  {label:'Skincare',val:1090340,color:BLUE},
+  {label:'Haircare',val:620252,color:GREEN},
+  {label:'Cosmetics',val:609482,color:AMBER},
+];
+const total2 = treemapItems.reduce((a,b)=>a+b.val,0);
+let x2=0;
+treemapItems.forEach(item => {
+  const w = (item.val/total2)*canvas.width;
+  ctx.fillStyle = item.color;
+  ctx.beginPath();
+  ctx.roundRect(x2+1,1,w-2,canvas.height-2,4);
+  ctx.fill();
+  ctx.fillStyle = '#fff';
+  ctx.font = '500 11px sans-serif';
+  ctx.fillText(item.label, x2+8, 22);
+  ctx.font = '10px sans-serif';
+  ctx.fillStyle = 'rgba(255,255,255,0.85)';
+  ctx.fillText('₹'+Math.round(item.val/1000)+'K', x2+8, 38);
+  ctx.fillText(Math.round(item.val/total2*100)+'%', x2+8, 52);
+  x2 += w;
+});
+
+const mapWrap = document.getElementById('mapWrap');
+mapWrap.innerHTML = `<svg viewBox="0 0 400 200" width="100%" height="100%" style="display:block;">
+  <rect width="400" height="200" fill="var(--color-background-secondary)" rx="6"/>
+  <text x="200" y="18" text-anchor="middle" font-size="10" fill="var(--color-text-secondary)" font-family="sans-serif">India — Revenue by City</text>
+  <circle cx="200" cy="100" r="60" fill="#e6f1fb" stroke="${BLUE}" stroke-width="0.5" opacity="0.4"/>
+  <circle cx="205" cy="130" r="${18}" fill="${BLUE}" opacity="0.85"/>
+  <text x="205" y="134" text-anchor="middle" font-size="9" fill="#fff" font-family="sans-serif">Kolkata</text>
+  <text x="205" y="152" text-anchor="middle" font-size="8" fill="${BLUE}" font-family="sans-serif">₹6.5L</text>
+  <circle cx="175" cy="105" r="${16}" fill="${GREEN}" opacity="0.85"/>
+  <text x="175" y="109" text-anchor="middle" font-size="9" fill="#fff" font-family="sans-serif">Chennai</text>
+  <text x="175" y="124" text-anchor="middle" font-size="8" fill="${GREEN}" font-family="sans-serif">₹5.9L</text>
+  <circle cx="180" cy="75" r="${14}" fill="${AMBER}" opacity="0.85"/>
+  <text x="180" y="79" text-anchor="middle" font-size="9" fill="#fff" font-family="sans-serif">Mumbai</text>
+  <text x="180" y="95" text-anchor="middle" font-size="8" fill="${AMBER}" font-family="sans-serif">₹4.6L</text>
+  <circle cx="215" cy="72" r="${12}" fill="${PURPLE}" opacity="0.85"/>
+  <text x="215" y="76" text-anchor="middle" font-size="9" fill="#fff" font-family="sans-serif">Delhi</text>
+  <text x="215" y="89" text-anchor="middle" font-size="8" fill="${PURPLE}" font-family="sans-serif">₹3.9L</text>
+  <circle cx="155" cy="115" r="${10}" fill="${CORAL}" opacity="0.85"/>
+  <text x="155" y="119" text-anchor="middle" font-size="8" fill="#fff" font-family="sans-serif">Blr</text>
+  <text x="155" y="132" text-anchor="middle" font-size="8" fill="${CORAL}" font-family="sans-serif">₹2.3L</text>
+  <text x="8" y="190" font-size="8" fill="var(--color-text-secondary)" font-family="sans-serif">Bubble size = revenue contribution</text>
+</svg>`;
+</script>
