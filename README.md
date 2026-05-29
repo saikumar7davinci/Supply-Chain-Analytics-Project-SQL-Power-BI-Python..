@@ -3,7 +3,7 @@
 > Transforming Supply Chain Operations into Actionable Business Intelligence using **Power BI, SQL, Python, and Excel**
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/saikumar7davinci/Supply-Chain-Analytics-Project-SQL-Power-BI-Python../adc20cda2eacf0af8713638dc5f4939389fa6d96/Supply%20chain%20report.png" alt="Supply Chain Dashboard" width="100%">
+  <img src="https://github.com/saikumar7davinci/Supply-Chain-Analytics-Project-SQL-Power-BI-Python../blob/adc20cda2eacf0af8713638dc5f4939389fa6d96/Supply%20chain%20report.png" alt="Supply Chain Dashboard" width="100%">
 </p>
 
 ---
